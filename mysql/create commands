@@ -1,0 +1,25 @@
+CREATE USER 'hacker' IDENTIFIED BY '228008';
+
+CREATE DATABASE brute;
+
+USE brute;
+
+CREATE TABLE users
+(
+    login VARCHAR(20) PRIMARY KEY,
+    password VARCHAR(64) NOT NULL
+);
+
+CREATE TABLE black_list
+(
+    ip_address VARCHAR(15) PRIMARY KEY,
+    last_login DATETIME,
+    login_attempt INT DEFAULT(1),
+    is_banned BOOLEAN DEFAULT(FALSE) NOT NULL
+);
+
+-- Sha256(JustMger) = 5569905e74db9b16f21b515cf746efd3e33a2cc3de492cacd50546a27b8edae8
+INSERT INTO users VALUE('admin', '5569905e74db9b16f21b515cf746efd3e33a2cc3de492cacd50546a27b8edae8');
+
+GRANT SELECT ON brute.users TO 'hacker';
+GRANT SELECT, INSERT, UPDATE ON brute.black_list TO 'hacker';
